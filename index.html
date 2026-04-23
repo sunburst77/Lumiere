@@ -630,7 +630,7 @@
     <div class="swiper review-swiper pb-2 intro-cha" style="--ich:1.1s">
       <div class="swiper-wrapper">
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">눈매교정</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -640,7 +640,7 @@
           </div>
         </article></div>
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">코성형</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -650,7 +650,7 @@
           </div>
         </article></div>
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">안면윤곽</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -660,7 +660,7 @@
           </div>
         </article></div>
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">지방이식</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -670,7 +670,7 @@
           </div>
         </article></div>
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">쌍꺼풀재수술</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -680,7 +680,7 @@
           </div>
         </article></div>
         <div class="swiper-slide"><article class="rounded-4xl overflow-hidden relative aspect-[3/4] group">
-          <img src="Slice 1.png" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
+          <img src="Slice 1.jpg" alt="" class="review-slide-img absolute inset-0 w-full h-full object-cover" />
           <div class="review-card-overlay absolute inset-0"></div>
           <span class="absolute top-3 left-3 z-10 bg-gray-900/70 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">지방흡입</span>
           <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -1161,12 +1161,19 @@
     syncHeaderScroll();
     window.addEventListener('scroll', syncHeaderScroll, { passive: true });
 
-    /* 리얼 시술 후기 슬라이드 이미지 — Slice 1~12 랜덤 */
+    /* 리얼 시술 후기 슬라이드 이미지 — Slice 1~13.jpg 중 슬라이드 개수만큼 무중복 랜덤 */
     (function assignReviewSliceImages() {
       var imgs = document.querySelectorAll('#reviews .review-swiper .review-slide-img');
+      var nums = [];
+      for (var j = 1; j <= 13; j++) nums.push(j);
+      for (var k = nums.length - 1; k > 0; k--) {
+        var r = Math.floor(Math.random() * (k + 1));
+        var tmp = nums[k];
+        nums[k] = nums[r];
+        nums[r] = tmp;
+      }
       for (var i = 0; i < imgs.length; i++) {
-        var n = Math.floor(Math.random() * 12) + 1;
-        imgs[i].src = 'Slice ' + n + '.png';
+        imgs[i].src = 'Slice ' + nums[i] + '.jpg';
       }
     })();
 
