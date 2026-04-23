@@ -1,0 +1,52 @@
+/* 루미에르: 하단 상담 신청 — FAB + 슬라이드 패널 (md 이상은 항시 표시) */
+.consult-backdrop {
+  transition: opacity 0.22s ease;
+}
+.consult-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+#consult-fab {
+  box-shadow: 0 8px 28px rgba(17, 17, 17, 0.32);
+}
+@media (max-width: 767.98px) {
+  #consult-fab {
+    right: max(1.5rem, calc(0.75rem + 15px + env(safe-area-inset-right, 0px)));
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  }
+}
+#consult #consult-form {
+  transition: transform 0.34s cubic-bezier(0.22, 0.08, 0.2, 1.12), opacity 0.26s ease;
+  transform-origin: bottom center;
+}
+@media (max-width: 767.98px) {
+  #consult #consult-form.intro-cha {
+    animation: none !important;
+    filter: none !important;
+  }
+  #consult:not(.is-open) #consult-form {
+    transform: translateY(calc(100% + 1.25rem)) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  #consult.is-open #consult-form {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #consult #consult-form {
+    transition: none;
+  }
+  @media (max-width: 767.98px) {
+    #consult:not(.is-open) #consult-form,
+    #consult.is-open #consult-form {
+      transform: none;
+    }
+    #consult:not(.is-open) #consult-form { opacity: 0; visibility: hidden; }
+    #consult.is-open #consult-form { opacity: 1; visibility: visible; }
+  }
+}

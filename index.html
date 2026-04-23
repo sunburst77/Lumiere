@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/leetaewook/gmarket-sans-dynamic-subset@master/GmarketSans.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="consult-embed.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -36,7 +37,8 @@
   </script>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-padding-top: 5.5rem; }
+    /* 앵커·고정 헤더 보정 + 가로 누수로 인한 잘못된 스크롤바 억제(세로는 문서 기본 스크롤) */
+    html { scroll-padding-top: 5.5rem; overflow-x: hidden; }
 
     /* ════════════════════════════════════════
        LOADING SCREEN
@@ -261,6 +263,7 @@
       font-family: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: #f5f5f7;
       padding-bottom: 160px;
+      overflow-x: hidden;
     }
     .font-title { font-family: 'Gmarket Sans', 'Pretendard', system-ui, sans-serif; font-weight: 500; }
     .font-title.font-bold { font-weight: 500; }
@@ -325,6 +328,12 @@
     .review-swiper .swiper-slide { width: 208px; height: auto; }
     @media (min-width: 768px) { .review-swiper .swiper-slide { width: 240px; } }
     .review-swiper .swiper-slide > article { height: 100%; }
+    #reviews .review-swiper.swiper,
+    #reviews .review-swiper {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
     .review-pagination { position: relative; margin-top: 1.25rem; }
     .review-pagination .swiper-pagination-bullet { width: 8px; height: 8px; background: #d1d5db; opacity: 1; }
     .review-pagination .swiper-pagination-bullet-active { background: #111827; }
@@ -571,7 +580,7 @@
     </div>
     <div class="hero-image-col intro-cha relative z-0 md:z-10 w-full min-h-0 max-md:mt-auto shrink-0 self-stretch flex flex-col max-md:items-stretch max-md:px-0 max-md:pb-0 md:w-[min(48%,36rem)] md:ml-auto md:justify-end" style="--ich: 0.68s">
       <div class="hero-img-frame relative z-10 w-full max-w-full max-md:mx-0 overflow-hidden">
-        <img src="model.png" alt="" class="hero-img-pic relative z-10 block w-full h-auto max-w-full object-contain object-bottom max-md:static md:absolute md:inset-0 md:h-full md:object-cover banner-image-mask rounded-none" />
+        <img src="model4-1.png" alt="" class="hero-img-pic relative z-10 block w-full h-auto max-w-full object-contain object-bottom max-md:static md:absolute md:inset-0 md:h-full md:object-cover banner-image-mask rounded-none" />
       </div>
     </div>
   </div>
@@ -1070,8 +1079,15 @@
   </div>
 </footer>
 
-<div id="consult" class="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3 md:px-6 pointer-events-none">
-  <form id="consult-form" class="intro-cha pointer-events-auto mx-auto max-w-5xl card-pastel-bg rounded-4xl shadow-2xl shadow-gray-900/40 p-4 flex flex-col md:flex-row flex-wrap items-center gap-3" style="--ich:2.8s">
+<div id="consult-backdrop" class="consult-backdrop fixed inset-0 z-40 bg-gray-900/40 opacity-0 pointer-events-none md:hidden" aria-hidden="true"></div>
+
+<div id="consult" class="fixed bottom-0 left-0 right-0 z-50 max-md:pb-0 max-md:px-0 pointer-events-none md:px-6 md:pb-3" aria-label="1분 상담 신청">
+  <button type="button" id="consult-fab" class="md:hidden pointer-events-auto fixed z-[51] w-14 h-14 rounded-2xl bg-gray-900 text-white flex items-center justify-center active:scale-95 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2" aria-label="1분 상담 신청 열기" aria-controls="consult-form" aria-expanded="false">
+    <svg class="w-6 h-6 consult-fab-icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0115.1-5.1z"/></svg>
+    <svg class="w-6 h-6 consult-fab-icon-close hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] max-md:pt-0 md:px-0 md:pb-0 w-full max-md:max-h-none max-md:overflow-x-clip">
+  <form id="consult-form" class="intro-cha pointer-events-auto mx-auto max-w-5xl card-pastel-bg rounded-4xl shadow-2xl shadow-gray-900/40 p-4 flex flex-col md:flex-row flex-wrap items-center gap-3" style="--ich:2.8s" data-source-page="index">
     <div class="flex items-center gap-3 md:pr-5 md:border-r md:border-gray-300/90 w-full md:w-auto">
       <div class="w-10 h-10 rounded-2xl bg-gray-900 text-white flex items-center justify-center shrink-0">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0115.1-5.1z"/></svg>
@@ -1081,9 +1097,9 @@
         <p class="text-[11px] text-gray-600 font-semibold leading-tight">전문의가 직접 답변</p>
       </div>
     </div>
-    <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <input name="name" type="text" required placeholder="이름" class="w-full bg-white text-sm font-semibold px-4 py-3 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900" />
-      <input name="phone" type="tel" required placeholder="전화번호" class="w-full bg-white text-sm font-semibold px-4 py-3 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900" />
+    <div class="flex-1 w-full min-w-0 grid grid-cols-2 gap-2">
+      <input name="name" type="text" required placeholder="이름" class="min-w-0 w-full bg-white text-sm font-semibold px-3 py-3 sm:px-4 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900" />
+      <input name="phone" type="tel" required placeholder="전화번호" class="min-w-0 w-full bg-white text-sm font-semibold px-3 py-3 sm:px-4 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900" />
     </div>
     <div class="flex items-center gap-2">
       <label class="text-xs text-gray-600 font-semibold flex items-center gap-1"><input name="agreed_privacy" type="checkbox" required value="1" class="rounded accent-gray-900" /> 동의</label>
@@ -1091,8 +1107,9 @@
     </div>
     <p id="consult-form-msg" class="hidden w-full basis-full text-center text-xs font-semibold mt-1 min-h-[1.25rem]" role="status" aria-live="polite"></p>
   </form>
+  </div>
 </div>
-
+<script src="consult-embed.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   /* ── 페이지 로더 (index 최초 1회만) ── */
@@ -1225,162 +1242,6 @@
           if (r.top < vh && r.bottom > 0) el.classList.add('is-visible');
         });
       }, 120);
-    })();
-
-    /* ── 전화번호(휴대폰) 자동 하이픈 ── */
-    (function () {
-      function formatKRPhoneDigits(d) {
-        var digits = String(d || '').replace(/\D/g, '');
-        if (!digits) return '';
-        if (digits.length > 11) digits = digits.slice(0, 11);
-
-        if (digits.slice(0, 2) === '02') {
-          if (digits.length <= 2) return digits;
-          if (digits.length <= 5) return digits.slice(0, 2) + '-' + digits.slice(2);
-          if (digits.length <= 9) return digits.slice(0, 2) + '-' + digits.slice(2, 5) + '-' + digits.slice(5);
-          return digits.slice(0, 2) + '-' + digits.slice(2, 6) + '-' + digits.slice(6, 10);
-        }
-
-        if (digits.slice(0, 3) === '010') {
-          if (digits.length <= 3) return digits;
-          if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
-          return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
-        }
-
-        if (digits.slice(0, 3) === '011') {
-          if (digits.length <= 3) return digits;
-          if (digits.length <= 6) return digits.slice(0, 3) + '-' + digits.slice(3);
-          if (digits.length <= 10) return digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
-          return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
-        }
-
-        if (/^01[6789]/.test(digits)) {
-          if (digits.length <= 3) return digits;
-          if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
-          return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
-        }
-
-        if (digits[0] === '0' && digits.length > 3) {
-          if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
-          return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
-        }
-
-        if (digits.length <= 3) return digits;
-        if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
-        return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
-      }
-
-      function digitCountBeforeIndex(str, index) {
-        var n = 0;
-        var i = 0;
-        for (; i < index && i < str.length; i++) {
-          if (/\d/.test(str.charAt(i))) n++;
-        }
-        return n;
-      }
-
-      function indexAfterDigitCount(formatted, count) {
-        if (count <= 0) return 0;
-        var seen = 0;
-        var i = 0;
-        for (; i < formatted.length; i++) {
-          if (/\d/.test(formatted.charAt(i))) {
-            seen++;
-            if (seen >= count) return i + 1;
-          }
-        }
-        return formatted.length;
-      }
-
-      function onPhoneInput(e) {
-        var el = e.target;
-        if (!el || el.name !== 'phone') return;
-        var oldVal = el.value;
-        var pos = typeof el.selectionStart === 'number' ? el.selectionStart : oldVal.length;
-        var dc = digitCountBeforeIndex(oldVal, pos);
-        var next = formatKRPhoneDigits(oldVal);
-        el.value = next;
-        var np = indexAfterDigitCount(next, dc);
-        try {
-          el.setSelectionRange(np, np);
-        } catch (err) { /* ignore */ }
-      }
-
-      document.querySelectorAll('input[name="phone"]').forEach(function (inp) {
-        inp.addEventListener('input', onPhoneInput);
-      });
-    })();
-
-    /* ── 상담 신청 → Supabase ── */
-    (function () {
-      var SUPABASE_URL = 'https://wppaljybzhnpjcycoyru.supabase.co';
-      var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcGFsanliemhucGpjeWNveXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3OTE1OTYsImV4cCI6MjA5MjM2NzU5Nn0.bUlYI77oHkY86vZaZY_WmSoMj7BXplBzKENi-O3blm0';
-      var form = document.getElementById('consult-form');
-      var msg = document.getElementById('consult-form-msg');
-      if (!form) return;
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var fd = new FormData(form);
-        var name = String(fd.get('name') || '').trim();
-        var phone = String(fd.get('phone') || '').trim();
-        var agreed = form.querySelector('input[name="agreed_privacy"]');
-        var agreedVal = agreed && agreed.checked;
-        if (!name || !phone || !agreedVal) return;
-
-        var btn = form.querySelector('.consult-submit-btn');
-        var prevLabel = btn ? btn.textContent : '';
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = '전송 중…';
-        }
-        if (msg) {
-          msg.classList.remove('hidden', 'text-green-700', 'text-red-600', 'text-gray-600');
-          msg.textContent = '';
-        }
-
-        fetch(SUPABASE_URL + '/rest/v1/consult_requests', {
-          method: 'POST',
-          headers: {
-            apikey: SUPABASE_ANON_KEY,
-            Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
-            'Content-Type': 'application/json',
-            Prefer: 'return=minimal',
-          },
-          body: JSON.stringify({
-            name: name,
-            phone: phone,
-            agreed_privacy: true,
-            source_page: 'index',
-          }),
-        })
-          .then(function (res) {
-            if (!res.ok) {
-              return res.json().then(function (j) {
-                throw new Error((j && (j.message || j.hint)) || res.statusText);
-              });
-            }
-            form.reset();
-            if (msg) {
-              msg.classList.add('text-green-700');
-              msg.textContent = '신청이 접수되었습니다. 빠르게 연락드리겠습니다.';
-              msg.classList.remove('hidden');
-            }
-          })
-          .catch(function () {
-            if (msg) {
-              msg.classList.add('text-red-600');
-              msg.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
-              msg.classList.remove('hidden');
-            }
-          })
-          .finally(function () {
-            if (btn) {
-              btn.disabled = false;
-              btn.textContent = prevLabel;
-            }
-          });
-      });
     })();
 
     /* ── 이벤트 카드 Flip + 신청 전송 → Supabase ── */
